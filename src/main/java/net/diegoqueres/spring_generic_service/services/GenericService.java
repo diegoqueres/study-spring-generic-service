@@ -1,27 +1,23 @@
 package net.diegoqueres.spring_generic_service.services;
 
 import net.diegoqueres.spring_generic_service.util.Convertible;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-public class GenericService<T extends Convertible<DTO>, DTO, ID> {
+public interface GenericService<T extends Convertible<DTO>, DTO, ID> {
 
-    @Autowired
-    private JpaRepository<T, ID> repository;
+    JpaRepository<T, ID> getRepository();
 
-    public DTO findById(ID id) {
-        Optional<T> result = repository.findById(id);
+    default DTO findById(ID id) {
+        Optional<T> result = getRepository().findById(id);
         return result.get().convert();
     }
 
-    public List<DTO> findAll() {
-        List<T> list = repository.findAll();
+    default List<DTO> findAll() {
+        List<T> list = getRepository().findAll();
         return list.stream().map(x -> x.convert()).collect(Collectors.toList());
     }
 
