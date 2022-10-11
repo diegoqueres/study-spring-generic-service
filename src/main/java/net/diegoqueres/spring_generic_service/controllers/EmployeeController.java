@@ -1,7 +1,9 @@
 package net.diegoqueres.spring_generic_service.controllers;
 
 import net.diegoqueres.spring_generic_service.dto.EmployeeDTO;
+import net.diegoqueres.spring_generic_service.entities.Employee;
 import net.diegoqueres.spring_generic_service.services.EmployeeService;
+import net.diegoqueres.spring_generic_service.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +18,7 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService service;
+    private GenericService<Employee, EmployeeDTO, Long> service;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<EmployeeDTO> findById(@PathVariable Long id) {

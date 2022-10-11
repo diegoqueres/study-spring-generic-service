@@ -1,10 +1,13 @@
 package net.diegoqueres.spring_generic_service.entities;
 
+import net.diegoqueres.spring_generic_service.dto.EmployeeDTO;
+import net.diegoqueres.spring_generic_service.util.Convertible;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_employee")
-public class Employee {
+public class Employee implements Convertible<EmployeeDTO> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,11 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public EmployeeDTO convert() {
+        return new EmployeeDTO(this);
     }
 
 }
